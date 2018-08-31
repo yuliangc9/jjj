@@ -32,6 +32,7 @@ cc.Class({
     },
 
     wsReady: false,
+    isMatch: false,
     enemyFlight: null,
 
     // LIFE-CYCLE CALLBACKS:
@@ -47,17 +48,31 @@ cc.Class({
         }, this);
     },
 
-    start () {
+    start() {
+        this.connectServer();
+    },
+
+    connectServer: function() {
         self = this
-        this._wsiSendText = new WebSocket("ws://192.168.99.123:12345/demo");
+
+        if (this.wsReady) {
+            this._wsiSendText.close();
+        }
+
+        this.wsReady = false;
+        this.isMatch = false;
+        
+        this._wsiSendText = new WebSocket("ws://192.168.99.123:8080/fight");
         this._wsiSendText.onopen = function(evt) {
             console.log("on open");
             self.wsReady = true;
+            self._wsiSendText.send("haha");
+            console.log("send id");
         };
+
+        this._wsiSendText.o
         
         this._wsiSendText.onmessage = function(evt) {
-            console.log("response text msg: "+evt.data);
-
             var info = JSON.parse(evt.data);
             if (info.fire) {
                 if (self.enemyFlight) {
@@ -68,6 +83,12 @@ cc.Class({
 
             if (info.leave) {
                 self.win();
+                return;
+            }
+
+            if (info.begin) {
+                console.log("match!");
+                self.isMatch = true;
                 return;
             }
 
@@ -96,6 +117,9 @@ cc.Class({
     },
 
     win: function() {
+        console.log("on win");
+        this.connectServer();
+
         if (this.enemyFlight == null) {
             return;
         }
@@ -105,6 +129,7 @@ cc.Class({
     },
 
     lose: function() {
+        console.log("on lose");
         if (this.wsReady) {
             this._wsiSendText.close();
         }
@@ -112,7 +137,7 @@ cc.Class({
     },
 
     update (dt) {
-        if (!this.wsReady) {
+        if (!this.wsReady || !this.isMatch) {
             return;
         }
 
@@ -125,7 +150,7 @@ cc.Class({
     },
 
     notifyFire: function() {
-        if (!this.wsReady) {
+        if (!this.wsReady || !this.isMatch) {
             return;
         }
 

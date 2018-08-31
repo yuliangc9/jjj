@@ -58,7 +58,7 @@ cc.Class({
     fire: function() {
         var b = cc.instantiate(this.bulletPrefab);
         b.getComponent('bullet_go').game = this.game;
-        b.getComponent('bullet_go').role = this.role;
+        b.getComponent('bullet_go').fromFly = this;
 
         this.game.node.addChild(b);
 
@@ -110,17 +110,17 @@ cc.Class({
         this.node.x += Math.cos(2 * Math.PI / 360 * this.node.rotation) * this.speed * dt;
         this.node.y -= Math.sin(2 * Math.PI / 360 * this.node.rotation) * this.speed * dt;
 
-        if (this.node.x > cc.winSize.width/2) {
-            this.node.x = cc.winSize.width/2;
+        if (this.node.x > this.game.node.width/2) {
+            this.node.x = this.game.node.width/2;
         }
-        if (this.node.x < -cc.winSize.width/2) {
-            this.node.x = -cc.winSize.width/2;
+        if (this.node.x < -this.game.node.width/2) {
+            this.node.x = -this.game.node.width/2;
         }
-        if (this.node.y > cc.winSize.height/2) {
-            this.node.y = cc.winSize.height/2;
+        if (this.node.y > this.game.node.height/2) {
+            this.node.y = this.game.node.height/2;
         }
-        if (this.node.y < -cc.winSize.height/2) {
-            this.node.y = -cc.winSize.height/2;
+        if (this.node.y < -this.game.node.height/2) {
+            this.node.y = -this.game.node.height/2;
         }
     },
 });

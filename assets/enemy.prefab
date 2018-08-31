@@ -39,8 +39,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 78,
-      "height": 67
+      "width": 82,
+      "height": 68
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -49,8 +49,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 51,
-      "y": -115,
+      "x": 107,
+      "y": -54,
       "z": 0
     },
     "_scale": {
@@ -70,7 +70,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 13,
+    "_localZOrder": 12,
     "groupIndex": 0,
     "_id": ""
   },
@@ -85,10 +85,10 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "97f8fe95-8d2b-42f1-be4b-f36c5a99c5cf"
+      "__uuid__": "c950adfa-ec78-4899-98c9-69099ef5e49c"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -100,7 +100,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "b5gUMBR+1GH4glW9nNXU6W"
+    "_id": "f81p0GgTpArb7Rs8qJvCG6"
   },
   {
     "__type__": "43577rsZ/BMVYhLQUrVAy+i",
@@ -120,7 +120,7 @@
     "fireDistance": 500,
     "bulletSpeed": 1000,
     "role": "enemy",
-    "_id": "ecQQ6Em5BNLZZ9h+lI+gME"
+    "_id": "ebzMZKV6RCuJw/17Y+SUxi"
   },
   {
     "__type__": "cc.PrefabInfo",

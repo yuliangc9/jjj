@@ -27,8 +27,10 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        role: "",
     },
+
+    fromFly: null,
+    finish: false,
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -39,11 +41,17 @@ cc.Class({
     },
 
     update (dt) {
-        if (this.role != "hero" && this.bingo(this.game.hero)) {
+        if (this.finish) {
+            return;
+        }
+
+        if (this.fromFly.role != "hero" && this.bingo(this.game.hero)) {
+            this.finish = true;
             this.game.lose();
             return;
         }
-        if (this.role != "enemy" && this.bingo(this.game.enemy)) {
+        if (this.fromFly.role != "enemy" && this.bingo(this.game.enemy)) {
+            this.finish = true;
             this.game.lose();
             return;
         }
