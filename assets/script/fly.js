@@ -31,6 +31,12 @@ cc.Class({
             default: null,
             type: cc.Prefab,
         },
+
+        healthShow: {
+            default: null,
+            type: cc.Node,
+        },
+
         speed: 0,
         turnSpeed: 0,
         targetRotation: 0,
@@ -40,12 +46,18 @@ cc.Class({
         bulletSpeed: 0,
 
         role: "",
+
+        health: 0,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         this.node.rotation = this.initRotation;
+
+        if (this.role == "hero") {
+            this.healthShow.width = this.health;
+        }
         
         // this.schedule(function() {
         //     this.fire();
@@ -53,6 +65,18 @@ cc.Class({
     },
 
     start () {
+    },
+
+    getShot: function(power) {
+        this.health -= power;
+
+        if (this.health <= 0) {
+            this.game.lose();
+            return;
+        }
+
+        this.healthShow.width = this.health;
+        this.game.notifyHealth(this.health);
     },
 
     fire: function() {

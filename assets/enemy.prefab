@@ -70,7 +70,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 12,
+    "_localZOrder": 51,
     "groupIndex": 0,
     "_id": ""
   },
@@ -100,7 +100,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "f81p0GgTpArb7Rs8qJvCG6"
+    "_id": "25M0RKmclDwZoLni49w+b4"
   },
   {
     "__type__": "43577rsZ/BMVYhLQUrVAy+i",
@@ -113,6 +113,7 @@
     "bulletPrefab": {
       "__uuid__": "14e217f9-3c74-4ebe-96b5-f7ad8168e3a2"
     },
+    "healthShow": null,
     "speed": 300,
     "turnSpeed": 360,
     "targetRotation": 180,
@@ -120,7 +121,8 @@
     "fireDistance": 500,
     "bulletSpeed": 1000,
     "role": "enemy",
-    "_id": "ebzMZKV6RCuJw/17Y+SUxi"
+    "health": 0,
+    "_id": "38TnVP0RZPLauqgEBIHK8O"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -128,9 +130,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "44a18775-9fb7-4c3a-85c0-feff8612b84b"
+      "__uuid__": "a22fb056-8c83-4b70-881c-e5da78dfcf0a"
     },
-    "fileId": "d7BqKIE95IdZWvllhzkPzt",
+    "fileId": "ffzShVNpdOgKB5HhuGEsqQ",
     "sync": false
   }
 ]

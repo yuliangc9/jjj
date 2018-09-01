@@ -27,6 +27,7 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        power: 30,
     },
 
     fromFly: null,
@@ -42,24 +43,29 @@ cc.Class({
 
     update (dt) {
         if (this.finish) {
+            console.log("bullet bingo finish");
+            this.node.stopAllActions();
+            this.node.destroy();
             return;
         }
 
-        if (this.fromFly.role != "hero" && this.bingo(this.game.hero)) {
+        if (this.fromFly.role == "enemy" && this.bingo(this.game.hero)) {
             this.finish = true;
-            this.game.lose();
+            this.game.hero.getComponent('fly').getShot(this.power);
             return;
         }
-        if (this.fromFly.role != "enemy" && this.bingo(this.game.enemy)) {
+
+        if (this.fromFly.role = "hero" && this.game.enemyFlight && this.bingo(this.game.enemyFlight)) {
+            console.log("shot enemy");
             this.finish = true;
-            this.game.lose();
+            //this.game.lose();
             return;
         }
     },
 
     bingo: function(f) {
         var distance = Math.sqrt((this.node.x - f.x)*(this.node.x - f.x) + (this.node.y - f.y)*(this.node.y - f.y));
-        if (distance < 70) {
+        if (distance < 50) {
             return true;
         }
         return false;

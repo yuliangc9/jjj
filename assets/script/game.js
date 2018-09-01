@@ -16,6 +16,14 @@ cc.Class({
             default: null,
             type: cc.Node,
         },
+        heroInfo: {
+            default: null,
+            type: cc.Node,
+        },
+        enemyInfo: {
+            default: null,
+            type: cc.Node,
+        },
         rock: {
             default: null,
             type: cc.Node,
@@ -46,6 +54,8 @@ cc.Class({
         this.playAgain.node.on('click', function() {
             cc.director.loadScene('fight');
         }, this);
+
+        this.enemyInfo.active = false;
     },
 
     start() {
@@ -53,7 +63,7 @@ cc.Class({
     },
 
     connectServer: function() {
-        self = this
+        var self = this
 
         if (this.wsReady) {
             this._wsiSendText.close();
@@ -66,13 +76,15 @@ cc.Class({
         this._wsiSendText.onopen = function(evt) {
             console.log("on open");
             self.wsReady = true;
-            self._wsiSendText.send("haha");
+            self._wsiSendText.send(JSON.stringify({name:"hehe", initHealth:300}));
             console.log("send id");
         };
 
         this._wsiSendText.o
         
         this._wsiSendText.onmessage = function(evt) {
+            //console.log(evt.data);
+
             var info = JSON.parse(evt.data);
             if (info.fire) {
                 if (self.enemyFlight) {
@@ -89,6 +101,14 @@ cc.Class({
             if (info.begin) {
                 console.log("match!");
                 self.isMatch = true;
+                self.enemyInfo.active = true;
+                self.enemyInfo.getChildByName("enemy_life_record").width = info.initHealth;
+                return;
+            }
+
+            if (info.health) {
+                console.log("get enemy health", info.health);
+                self.enemyInfo.getChildByName("enemy_life_record").width = info.health;
                 return;
             }
 
@@ -118,14 +138,15 @@ cc.Class({
 
     win: function() {
         console.log("on win");
-        this.connectServer();
 
-        if (this.enemyFlight == null) {
-            return;
+        if (this.enemyFlight != null) {
+            this.enemyFlight.destroy();
+            this.enemyFlight = null;
         }
 
-        self.enemyFlight.destroy();
-        self.enemyFlight = null;
+        this.connectServer();
+
+        this.enemyInfo.active = false;
     },
 
     lose: function() {
@@ -155,5 +176,13 @@ cc.Class({
         }
 
         this._wsiSendText.send(JSON.stringify({fire:true}));
-    }
+    },
+
+    notifyHealth: function(h) {
+        if (!this.wsReady || !this.isMatch) {
+            return;
+        }
+
+        this._wsiSendText.send(JSON.stringify({health:h}));
+    },
 });
