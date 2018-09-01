@@ -27,8 +27,6 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        initX: 0,
-        initY: 0,
         _isMoving: false,
     },
 
@@ -39,6 +37,9 @@ cc.Class({
     },
 
     moving: function(event) {
+        this.initX = 100 + (this.node.width/2) - (this.game.node.width/2);
+        this.initY = 100 + (this.node.height/2) - (this.game.node.height/2);
+
         if (!this._isMoving) {
             return;
         }
@@ -48,6 +49,8 @@ cc.Class({
 
         var deltaX = this.node.x - this.initX;
         var deltaY = this.node.y - this.initY;
+        // var deltaX = event.getDelta().x;
+        // var deltaY = event.getDelta().y;
 
         var targetRotation = 0;
 
@@ -68,6 +71,9 @@ cc.Class({
     },
 
     endMove: function(event) {
+        this.initX = 100 + (this.node.width/2) - (this.game.node.width/2);
+        this.initY = 100 + (this.node.height/2) - (this.game.node.height/2);
+
         this._isMoving = false;
 
         this.node.x = this.initX;

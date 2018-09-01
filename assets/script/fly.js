@@ -37,6 +37,11 @@ cc.Class({
             type: cc.Node,
         },
 
+        nameShow: {
+            default: null,
+            type: cc.Label,
+        },
+
         speed: 0,
         turnSpeed: 0,
         targetRotation: 0,
@@ -57,6 +62,7 @@ cc.Class({
 
         if (this.role == "hero") {
             this.healthShow.width = this.health;
+            this.nameShow.string = GlobalConfig.heroName;
         }
         
         // this.schedule(function() {
@@ -89,6 +95,7 @@ cc.Class({
         b.setPosition(this.node.getPosition());
         b.setRotation(this.node.getRotation());
 
+        console.log("plane fire!", this.role);
         if (this.role == "hero") {
             this.game.notifyFire();
         }

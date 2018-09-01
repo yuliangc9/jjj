@@ -24,6 +24,10 @@ cc.Class({
             default: null,
             type: cc.Node,
         },
+        enemyName: {
+            default: null,
+            type: cc.Label,
+        },
         rock: {
             default: null,
             type: cc.Node,
@@ -76,7 +80,7 @@ cc.Class({
         this._wsiSendText.onopen = function(evt) {
             console.log("on open");
             self.wsReady = true;
-            self._wsiSendText.send(JSON.stringify({name:"hehe", initHealth:300}));
+            self._wsiSendText.send(JSON.stringify({name:GlobalConfig.heroName, initHealth:300}));
             console.log("send id");
         };
 
@@ -99,10 +103,11 @@ cc.Class({
             }
 
             if (info.begin) {
-                console.log("match!");
+                console.log("match!", self.enemyInfo.getChildByName("enemy_name"));
                 self.isMatch = true;
                 self.enemyInfo.active = true;
                 self.enemyInfo.getChildByName("enemy_life_record").width = info.initHealth;
+                self.enemyName.string = info.name;
                 return;
             }
 
@@ -171,10 +176,13 @@ cc.Class({
     },
 
     notifyFire: function() {
+        console.log("notify fire");
+
         if (!this.wsReady || !this.isMatch) {
             return;
         }
 
+        console.log("notify fire2");
         this._wsiSendText.send(JSON.stringify({fire:true}));
     },
 
