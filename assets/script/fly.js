@@ -48,11 +48,14 @@ cc.Class({
         initRotation: 0,
 
         fireDistance: 0,
+        bulletLoad: 0,
         bulletSpeed: 0,
 
         role: "",
 
         health: 0,
+
+        loadFinish: true,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -86,6 +89,15 @@ cc.Class({
     },
 
     fire: function() {
+        if (!this.loadFinish) {
+            return;
+        }
+
+        this.loadFinish = false;
+        this.scheduleOnce(function() {
+            this.loadFinish = true
+        }, this.bulletLoad);
+
         var b = cc.instantiate(this.bulletPrefab);
         b.getComponent('bullet_go').game = this.game;
         b.getComponent('bullet_go').fromFly = this;

@@ -27,7 +27,7 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        power: 30,
+        power: 10,
     },
 
     fromFly: null,
@@ -65,7 +65,7 @@ cc.Class({
 
     bingo: function(f) {
         var distance = Math.sqrt((this.node.x - f.x)*(this.node.x - f.x) + (this.node.y - f.y)*(this.node.y - f.y));
-        if (distance < 50) {
+        if (distance < 30) {
             return true;
         }
         return false;

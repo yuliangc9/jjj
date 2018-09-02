@@ -44,8 +44,17 @@ cc.Class({
             return;
         }
 
-        this.node.x += event.getDelta().x;
-        this.node.y += event.getDelta().y;
+        var tmpX = this.node.x + event.getDelta().x;
+        var tmpY = this.node.y + event.getDelta().y;
+
+        var tmpDistance = Math.sqrt((tmpX - this.initX)*(tmpX - this.initX) + (tmpY - this.initY)*(tmpY - this.initY));
+        if (tmpDistance > 50) {
+            tmpX = 50/tmpDistance * (tmpX - this.initX) + this.initX;
+            tmpY = 50/tmpDistance * (tmpY - this.initY) + this.initY;
+        }
+
+        this.node.x = tmpX;
+        this.node.y = tmpY;
 
         var deltaX = this.node.x - this.initX;
         var deltaY = this.node.y - this.initY;
@@ -71,6 +80,7 @@ cc.Class({
     },
 
     endMove: function(event) {
+        console.log("on rock end");
         this.initX = 100 + (this.node.width/2) - (this.game.node.width/2);
         this.initY = 100 + (this.node.height/2) - (this.game.node.height/2);
 
@@ -87,6 +97,7 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_START, this.beginMove, this);
         this.node.on(cc.Node.EventType.TOUCH_MOVE, this.moving, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.endMove, this);
+        this.node.on(cc.Node.EventType.TOUCH_CANCEL, this.endMove, this);
     },
 
     start () {
