@@ -80,7 +80,7 @@ cc.Class({
         this._wsiSendText.onopen = function(evt) {
             console.log("on open");
             self.wsReady = true;
-            self._wsiSendText.send(JSON.stringify({name:GlobalConfig.heroName, initHealth:300}));
+            self._wsiSendText.send(JSON.stringify({name:GlobalConfig.heroName, initHealth:self.hero.getComponent('fly').health}));
             console.log("send id");
         };
 

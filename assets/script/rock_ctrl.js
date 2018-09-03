@@ -47,11 +47,11 @@ cc.Class({
         var tmpX = this.node.x + event.getDelta().x;
         var tmpY = this.node.y + event.getDelta().y;
 
-        var tmpDistance = Math.sqrt((tmpX - this.initX)*(tmpX - this.initX) + (tmpY - this.initY)*(tmpY - this.initY));
-        if (tmpDistance > 50) {
-            tmpX = 50/tmpDistance * (tmpX - this.initX) + this.initX;
-            tmpY = 50/tmpDistance * (tmpY - this.initY) + this.initY;
-        }
+        // var tmpDistance = Math.sqrt((tmpX - this.initX)*(tmpX - this.initX) + (tmpY - this.initY)*(tmpY - this.initY));
+        // if (tmpDistance > 50) {
+        //     tmpX = 50/tmpDistance * (tmpX - this.initX) + this.initX;
+        //     tmpY = 50/tmpDistance * (tmpY - this.initY) + this.initY;
+        // }
 
         this.node.x = tmpX;
         this.node.y = tmpY;

@@ -27,7 +27,7 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        power: 10,
+        power: 5,
     },
 
     fromFly: null,
