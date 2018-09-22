@@ -49,6 +49,8 @@ cc.Class({
 
         fireDistance: 0,
         bulletLoad: 0,
+        bulletC: 5,
+        bulletL: 5,
         bulletSpeed: 0,
 
         role: "",
@@ -68,6 +70,7 @@ cc.Class({
             this.nameShow.string = GlobalConfig.heroName;
         }
         
+        this.bulletL = this.bulletC;
         // this.schedule(function() {
         //     this.fire();
         // }, 1);
@@ -93,7 +96,18 @@ cc.Class({
             return;
         }
 
-        this.loadFinish = false;
+        if (this.game.enemyFlight != null) {
+            if ((this.game.enemyFlight.x - this.node.x)*(this.game.enemyFlight.x - this.node.x) + 
+                (this.game.enemyFlight.y - this.node.y)*(this.game.enemyFlight.y - this.node.y) < 60*60) {
+                    return;
+                }
+        }
+
+        this.bulletL--;
+        if (this.bulletL == 0) {
+            this.loadFinish = false;
+            this.bulletL = this.bulletC;
+        }
         this.scheduleOnce(function() {
             this.loadFinish = true
         }, this.bulletLoad);
@@ -154,16 +168,24 @@ cc.Class({
         this.node.y -= Math.sin(2 * Math.PI / 360 * this.node.rotation) * this.speed * dt;
 
         if (this.node.x > this.game.node.width/2) {
-            this.node.x = this.game.node.width/2;
+            // this.node.x = this.game.node.width/2;
+            this.health = 0;
+            this.game.lose();
         }
         if (this.node.x < -this.game.node.width/2) {
-            this.node.x = -this.game.node.width/2;
+            // this.node.x = -this.game.node.width/2;
+            this.health = 0;
+            this.game.lose();
         }
         if (this.node.y > this.game.node.height/2) {
-            this.node.y = this.game.node.height/2;
+            // this.node.y = this.game.node.height/2;
+            this.health = 0;
+            this.game.lose();
         }
         if (this.node.y < -this.game.node.height/2) {
-            this.node.y = -this.game.node.height/2;
+            // this.node.y = -this.game.node.height/2;
+            this.health = 0;
+            this.game.lose();
         }
     },
 });

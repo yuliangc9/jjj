@@ -159,6 +159,7 @@ cc.Class({
         if (this.wsReady) {
             this._wsiSendText.close();
         }
+        this.hero.destroy();
         this.playAgain.node.active = true;
     },
 
