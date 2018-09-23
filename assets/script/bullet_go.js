@@ -58,6 +58,8 @@ cc.Class({
         if (this.fromFly.role == "hero" && this.game.enemyFlight && this.bingo(this.game.enemyFlight)) {
             console.log("shot enemy");
             this.finish = true;
+            var shotedAnim = this.game.enemyFlight.getComponent(cc.Animation);
+            shotedAnim.play("shoted");
             //this.game.lose();
             return;
         }

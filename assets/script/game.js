@@ -107,7 +107,14 @@ cc.Class({
                 self.isMatch = true;
                 self.enemyInfo.active = true;
                 self.enemyInfo.getChildByName("enemy_life_record").width = info.initHealth;
-                self.enemyName.string = info.name;
+                self.enemyInfo.getChildByName("bullet_record").width = 251;
+                if (info.name) self.enemyName.string = info.name;
+
+                self.hero.getComponent('fly').bulletL = self.hero.getComponent('fly').bulletC;
+                self.hero.getComponent('fly').bulletShow.width = 251;
+                self.hero.getComponent('fly').health = 300;
+                self.hero.getComponent('fly').healthShow.width = 300;
+
                 return;
             }
 
@@ -121,6 +128,7 @@ cc.Class({
                 console.log("init enemy flight");
                 self.enemyFlight = cc.instantiate(self.enemy);
                 self.enemyFlight.getComponent('fly').game = self;
+                self.enemyFlight.getComponent('fly').bulletShow = self.enemyInfo.getChildByName("bullet_record");
                 self.node.addChild(self.enemyFlight);
             }
 
@@ -159,7 +167,8 @@ cc.Class({
         if (this.wsReady) {
             this._wsiSendText.close();
         }
-        this.hero.destroy();
+
+        // this.hero.destroy();
         this.playAgain.node.active = true;
     },
 
