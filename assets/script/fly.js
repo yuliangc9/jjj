@@ -112,7 +112,7 @@ cc.Class({
 
         if (this.game.enemyFlight != null && this.role == "hero") {
             if ((this.game.enemyFlight.x - this.node.x)*(this.game.enemyFlight.x - this.node.x) + 
-                (this.game.enemyFlight.y - this.node.y)*(this.game.enemyFlight.y - this.node.y) < 60*60) {
+                (this.game.enemyFlight.y - this.node.y)*(this.game.enemyFlight.y - this.node.y) < 100*100) {
                     console.log("ignore file2");
                     return;
                 }
