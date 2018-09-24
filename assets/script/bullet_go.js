@@ -27,7 +27,12 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        power: 5,
+        power: 15,
+
+        bingoAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
     },
 
     fromFly: null,
@@ -41,17 +46,23 @@ cc.Class({
 
     },
 
+    onFinish () {
+        this.node.destroy();
+    },
+
     update (dt) {
         if (this.finish) {
             console.log("bullet bingo finish");
             this.node.stopAllActions();
-            this.node.destroy();
             return;
         }
 
         if (this.fromFly.role == "enemy" && this.bingo(this.game.hero)) {
             this.finish = true;
             this.game.hero.getComponent('fly').getShot(this.power);
+
+            var shotedAnim = this.node.getComponent(cc.Animation);
+            shotedAnim.play("bullet_boom");
             return;
         }
 
@@ -60,7 +71,9 @@ cc.Class({
             this.finish = true;
             var shotedAnim = this.game.enemyFlight.getComponent(cc.Animation);
             shotedAnim.play("shoted");
-            //this.game.lose();
+
+            var shotedAnim = this.node.getComponent(cc.Animation);
+            shotedAnim.play("bullet_boom");
             return;
         }
     },
@@ -68,6 +81,8 @@ cc.Class({
     bingo: function(f) {
         var distance = Math.sqrt((this.node.x - f.x)*(this.node.x - f.x) + (this.node.y - f.y)*(this.node.y - f.y));
         if (distance < 30) {
+            cc.audioEngine.play(this.bingoAudio, false, 1);
+
             return true;
         }
         return false;

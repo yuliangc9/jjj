@@ -16,6 +16,10 @@ cc.Class({
             default: null,
             type: cc.Node,
         },
+        bgAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
         heroInfo: {
             default: null,
             type: cc.Node,
@@ -64,6 +68,7 @@ cc.Class({
 
     start() {
         this.connectServer();
+        cc.audioEngine.play(this.bgAudio, true, 0.8);
     },
 
     connectServer: function() {
@@ -153,7 +158,9 @@ cc.Class({
         console.log("on win");
 
         if (this.enemyFlight != null) {
-            this.enemyFlight.destroy();
+            var shotedAnim = this.enemyFlight.getComponent(cc.Animation);
+            shotedAnim.play("fail_boom");
+
             this.enemyFlight = null;
         }
 

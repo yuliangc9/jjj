@@ -32,6 +32,11 @@ cc.Class({
             type: cc.Prefab,
         },
 
+        shotAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
+
         healthShow: {
             default: null,
             type: cc.Node,
@@ -129,6 +134,8 @@ cc.Class({
             }, this.bulletLoad);
         }
 
+        cc.audioEngine.play(this.shotAudio, false, 0.5);
+
         var b = cc.instantiate(this.bulletPrefab);
         b.getComponent('bullet_go').game = this.game;
         b.getComponent('bullet_go').fromFly = this;
@@ -209,9 +216,10 @@ cc.Class({
     lose: function() {
         this._finish = true;
 
-        var shotedAnim = this.node.getComponent(cc.Animation);
-        shotedAnim.play("fail_boom");
-
         this.game.lose();
     },
+
+    disappear: function() {
+        this.node.destroy();
+    }
 });
