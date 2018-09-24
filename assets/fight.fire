@@ -1598,8 +1598,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 613.5,
-      "y": 282.5,
+      "x": 605,
+      "y": 313,
       "z": 0
     },
     "_scale": {
@@ -1947,8 +1947,8 @@
     "_target": null,
     "_alignFlags": 33,
     "_left": 0,
-    "_right": 21.5,
-    "_top": 60.5,
+    "_right": 30,
+    "_top": 30,
     "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
