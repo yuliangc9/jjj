@@ -73,7 +73,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 123,
+    "_localZOrder": 20,
     "groupIndex": 0,
     "_id": ""
   },
@@ -103,7 +103,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "4eZJN3wfNPxZFOHOy3Cdo3"
+    "_id": "04lEmrVTpIapgdxJY85evn"
   },
   {
     "__type__": "43577rsZ/BMVYhLQUrVAy+i",
@@ -128,14 +128,14 @@
     "initRotation": 0,
     "fireDistance": 500,
     "bulletLoad": 0,
-    "bulletC": 10,
-    "bulletL": 10,
+    "bulletC": 40,
+    "bulletL": 40,
     "bulletSpeed": 1000,
     "role": "enemy",
     "health": 0,
     "loadFinish": true,
     "_finish": false,
-    "_id": "3dSst4/RJNlLethpC636q4"
+    "_id": "2b+5ollfVPk7bP7pvpxAUj"
   },
   {
     "__type__": "cc.Animation",
@@ -157,7 +157,7 @@
       }
     ],
     "playOnLoad": false,
-    "_id": "20y8RQ6nxJeJgF0kjQH8Mx"
+    "_id": "bfAZOPzGlPgK+CgALmP1/H"
   },
   {
     "__type__": "cc.PrefabInfo",

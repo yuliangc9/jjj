@@ -16,6 +16,10 @@ cc.Class({
             default: null,
             type: cc.Node,
         },
+        forbiddenShow: {
+            default: null,
+            type: cc.Node,
+        },
         bgAudio: {
             default: null,
             type: cc.AudioClip
@@ -64,6 +68,7 @@ cc.Class({
         }, this);
 
         this.enemyInfo.active = false;
+        this.forbiddenShow.active = false;
     },
 
     start() {
@@ -190,6 +195,15 @@ cc.Class({
             heroRotation: this.hero.getRotation(),
         }
         this._wsiSendText.send(JSON.stringify(info));
+
+        if (this.enemyFlight != null) {
+            if ((this.enemyFlight.x - this.hero.x)*(this.enemyFlight.x - this.hero.x) + 
+                (this.enemyFlight.y - this.hero.y)*(this.enemyFlight.y - this.hero.y) < 100*100) {
+                    this.forbiddenShow.active = true;
+            } else {
+                this.forbiddenShow.active = false;
+            }
+        }
     },
 
     notifyFire: function() {

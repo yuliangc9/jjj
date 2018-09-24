@@ -115,7 +115,7 @@ cc.Class({
                 (this.game.enemyFlight.y - this.node.y)*(this.game.enemyFlight.y - this.node.y) < 100*100) {
                     console.log("ignore file2");
                     return;
-                }
+            }
         }
 
         this.bulletShow.width -= 250/this.bulletC;
@@ -141,6 +141,7 @@ cc.Class({
         b.getComponent('bullet_go').fromFly = this;
 
         this.game.node.addChild(b);
+        b.zIndex = 0;
 
         b.setPosition(this.node.getPosition());
         b.setRotation(this.node.getRotation());
