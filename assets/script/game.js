@@ -73,7 +73,7 @@ cc.Class({
 
     start() {
         this.connectServer();
-        cc.audioEngine.play(this.bgAudio, true, 0.8);
+        this.bgMusicID = cc.audioEngine.play(this.bgAudio, true, 0.8);
     },
 
     connectServer: function() {
@@ -86,19 +86,17 @@ cc.Class({
         this.wsReady = false;
         this.isMatch = false;
         
-        this._wsiSendText = new WebSocket("ws://192.168.99.123:8080/fight");
+        this._wsiSendText = new WebSocket("ws://47.105.151.1:8080/fight");
         this._wsiSendText.onopen = function(evt) {
             console.log("on open");
             self.wsReady = true;
             self._wsiSendText.send(JSON.stringify({name:GlobalConfig.heroName, initHealth:self.hero.getComponent('fly').health}));
-            console.log("send id");
+            console.log("send id", JSON.stringify({name:GlobalConfig.heroName, initHealth:self.hero.getComponent('fly').health}));
         };
 
         this._wsiSendText.o
         
         this._wsiSendText.onmessage = function(evt) {
-            //console.log(evt.data);
-
             var info = JSON.parse(evt.data);
             if (info.fire) {
                 if (self.enemyFlight) {
@@ -113,6 +111,7 @@ cc.Class({
             }
 
             if (info.begin) {
+                console.log(evt.data);
                 console.log("match!", self.enemyInfo.getChildByName("enemy_name"));
                 self.isMatch = true;
                 self.enemyInfo.active = true;
@@ -182,6 +181,10 @@ cc.Class({
 
         // this.hero.destroy();
         this.playAgain.node.active = true;
+
+        if (this.bgMusicID != null) {
+            cc.audioEngine.stop(this.bgMusicID);
+        }
     },
 
     update (dt) {
@@ -198,7 +201,7 @@ cc.Class({
 
         if (this.enemyFlight != null) {
             if ((this.enemyFlight.x - this.hero.x)*(this.enemyFlight.x - this.hero.x) + 
-                (this.enemyFlight.y - this.hero.y)*(this.enemyFlight.y - this.hero.y) < 100*100) {
+                (this.enemyFlight.y - this.hero.y)*(this.enemyFlight.y - this.hero.y) < 70*70) {
                     this.forbiddenShow.active = true;
             } else {
                 this.forbiddenShow.active = false;

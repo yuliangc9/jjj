@@ -27,7 +27,7 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        power: 40,
+        power: 30,
 
         bingoAudio: {
             default: null,

@@ -91,17 +91,19 @@ cc.Class({
     },
 
     getShot: function(power) {
+        console.log("get shoted!", power, this.health);
         this.health -= power;
 
         var shotedAnim = this.node.getComponent(cc.Animation);
         shotedAnim.play("shoted");
+
+        this.healthShow.width = this.health;
 
         if (this.health <= 0) {
             this.lose();
             return;
         }
 
-        this.healthShow.width = this.health;
         this.game.notifyHealth(this.health);
     },
 
@@ -112,7 +114,7 @@ cc.Class({
 
         if (this.game.enemyFlight != null && this.role == "hero") {
             if ((this.game.enemyFlight.x - this.node.x)*(this.game.enemyFlight.x - this.node.x) + 
-                (this.game.enemyFlight.y - this.node.y)*(this.game.enemyFlight.y - this.node.y) < 100*100) {
+                (this.game.enemyFlight.y - this.node.y)*(this.game.enemyFlight.y - this.node.y) < 70*70) {
                     console.log("ignore file2");
                     return;
             }
@@ -143,16 +145,19 @@ cc.Class({
         this.game.node.addChild(b);
         b.zIndex = 0;
 
+        var bulletRotation = this.node.getRotation() + this.adaptBulletRotation();
+
         b.setPosition(this.node.getPosition());
-        b.setRotation(this.node.getRotation());
+        b.setRotation(bulletRotation);
 
         console.log("plane fire!", this.role);
         if (this.role == "hero") {
             this.game.notifyFire();
         }
 
-        var xd = Math.cos(Math.PI/180*this.node.getRotation()) * this.fireDistance;
-        var yd = -Math.sin(Math.PI/180*this.node.getRotation()) * this.fireDistance;
+        var xd = Math.cos(Math.PI/180*bulletRotation) * this.fireDistance;
+        var yd = -Math.sin(Math.PI/180*bulletRotation) * this.fireDistance;
+
         var duration = this.fireDistance/this.bulletSpeed;
         b.runAction(cc.sequence(cc.moveBy(duration, xd, yd), 
             cc.callFunc(function(bullet) {
@@ -214,8 +219,54 @@ cc.Class({
         }
     },
 
+    adaptBulletRotation: function() {
+        var targetX;
+        var targetY;
+
+        if (this.game.enemyFlight == null) {
+            return 0;
+        }
+
+        if (this.role == "hero") {
+            targetX = this.game.enemyFlight.x;
+            targetY = this.game.enemyFlight.y;
+        } else {
+            targetX = this.game.hero.x;
+            targetY = this.game.hero.y;
+        }
+
+        var deltaX = targetX - this.node.x;
+        var deltaY = targetY - this.node.y;
+
+        var targetRotation = 0;
+
+        if (deltaY == 0 && deltaX == 0) {
+            return;
+        }
+
+        if (deltaY == 0) {
+            if (deltaX > 0) targetRotation = 0;
+            if (deltaX < 0) targetRotation = 180;
+        } else {
+            targetRotation = Math.atan(deltaX/deltaY) * 180 / Math.PI;
+            if (deltaY < 0) targetRotation += 90;
+            if (deltaY > 0) targetRotation += 270;
+        }
+
+        var deltaR = targetRotation - this.node.getRotation();
+
+        if (deltaR < 15 && deltaR > -15) {
+            return deltaR;
+        }
+
+        return 0;
+    },
+
     lose: function() {
         this._finish = true;
+
+        var shotedAnim = this.node.getComponent(cc.Animation);
+        shotedAnim.play("fail_boom");
 
         this.game.lose();
     },
