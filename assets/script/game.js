@@ -44,6 +44,10 @@ cc.Class({
             default: null,
             type: cc.Node,
         },
+        acButton: {
+            default: null,
+            type: cc.Node,
+        },
         enemy: {
             default: null,
             type: cc.Prefab,
@@ -61,6 +65,7 @@ cc.Class({
         this.rock.getComponent('rock_ctrl').game = this;
         this.hero.getComponent('fly').game = this;
         this.fireButton.getComponent('fire_ctrl').game = this;
+        this.acButton.getComponent('ac').game = this;
 
         this.playAgain.node.active = false;
         this.playAgain.node.on('click', function() {

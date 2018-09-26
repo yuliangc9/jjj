@@ -27,8 +27,11 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        frequency: 0,
     },
+
+    // LIFE-CYCLE CALLBACKS:
+
+    // onLoad () {},
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -36,17 +39,16 @@ cc.Class({
 
     fire: function() {
         this.node.opacity = 255;
-        this.game.hero.getComponent('fly').fire();
+        this.game.hero.getComponent('fly').acStart();
     },
 
     fire_end: function() {
         this.node.opacity = 180;
+        this.game.hero.getComponent('fly').acEnd();
     },
 
     start () {
         this.node.on(cc.Node.EventType.TOUCH_START, this.fire, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.fire_end, this);
     },
-
-    // update (dt) {},
 });

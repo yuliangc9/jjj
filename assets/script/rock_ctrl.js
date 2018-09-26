@@ -33,6 +33,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     beginMove: function(event) {
+        this.node.opacity = 255;
         this._isMoving = true;
     },
 
@@ -81,6 +82,7 @@ cc.Class({
 
     endMove: function(event) {
         console.log("on rock end");
+        this.node.opacity = 180;
         this.initX = 100 + (this.node.width/2) - (this.game.node.width/2);
         this.initY = 100 + (this.node.height/2) - (this.game.node.height/2);
 

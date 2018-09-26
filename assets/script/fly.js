@@ -42,6 +42,11 @@ cc.Class({
             type: cc.Node,
         },
 
+        oilShow: {
+            default: null,
+            type: cc.Node,
+        },
+
         bulletShow: {
             default: null,
             type: cc.Node,
@@ -53,6 +58,8 @@ cc.Class({
         },
 
         speed: 0,
+        acSpeed: 0,
+        normalSpeed: 0,
         turnSpeed: 0,
         targetRotation: 0,
         initRotation: 0,
@@ -66,6 +73,7 @@ cc.Class({
         role: "",
 
         health: 0,
+        oil: 0,
 
         loadFinish: true,
         _finish: false,
@@ -79,9 +87,11 @@ cc.Class({
         if (this.role == "hero") {
             this.healthShow.width = this.health;
             this.nameShow.string = GlobalConfig.heroName;
+            this.oilShow.width = this.oil;
         }
         
         this.bulletL = this.bulletC;
+        this.speed = this.normalSpeed;
         // this.schedule(function() {
         //     this.fire();
         // }, 1);
@@ -105,6 +115,14 @@ cc.Class({
         }
 
         this.game.notifyHealth(this.health);
+    },
+
+    acStart: function() {
+        this.speed = this.acSpeed;
+    },
+
+    acEnd: function() {
+        this.speed = this.normalSpeed;
     },
 
     fire: function() {
@@ -165,10 +183,29 @@ cc.Class({
             }, this, b)));
     },
 
+    updateOil () {
+        if (this.oil <= 0) {
+            return;
+        }
+
+        if (this.lastUpdateOilTime == null) {
+            this.lastUpdateOilTime = new Date().getTime();
+            return;
+        }
+
+        var nowTime = new Date().getTime();
+
+        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.00003;
+        this.oilShow.width = this.oil;
+        this.lastUpdateOilTime = nowTime;
+    },
+
     update (dt) {
         if (this.role == "enemy" || this._finish) {
             return;
         }
+
+        this.updateOil();
 
         if (this.node.rotation != this.targetRotation) {
             var direct = 1;
@@ -255,7 +292,7 @@ cc.Class({
 
         var deltaR = targetRotation - this.node.getRotation();
 
-        if (deltaR < 15 && deltaR > -15) {
+        if (deltaR < 30 && deltaR > -30) {
             return deltaR;
         }
 
