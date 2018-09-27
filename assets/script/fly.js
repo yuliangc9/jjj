@@ -195,7 +195,7 @@ cc.Class({
 
         var nowTime = new Date().getTime();
 
-        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.000015;
+        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.000025;
         this.oilShow.width = this.oil;
         this.lastUpdateOilTime = nowTime;
 
