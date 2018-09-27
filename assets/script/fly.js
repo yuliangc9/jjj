@@ -184,7 +184,7 @@ cc.Class({
     },
 
     updateOil () {
-        if (this.oil <= 0) {
+        if (this.oil <= 0 || !this.game.isMatch) {
             return;
         }
 
@@ -195,9 +195,13 @@ cc.Class({
 
         var nowTime = new Date().getTime();
 
-        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.00003;
+        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.000015;
         this.oilShow.width = this.oil;
         this.lastUpdateOilTime = nowTime;
+
+        if (this.oil <= 0) {
+            this.lose();
+        }
     },
 
     update (dt) {
@@ -292,7 +296,7 @@ cc.Class({
 
         var deltaR = targetRotation - this.node.getRotation();
 
-        if (deltaR < 30 && deltaR > -30) {
+        if (deltaR < 20 && deltaR > -20) {
             return deltaR;
         }
 

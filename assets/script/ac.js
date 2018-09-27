@@ -49,6 +49,7 @@ cc.Class({
 
     start () {
         this.node.on(cc.Node.EventType.TOUCH_START, this.fire, this);
+        this.node.on(cc.Node.EventType.TOUCH_CANCEL, this.fire_end, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.fire_end, this);
     },
 });

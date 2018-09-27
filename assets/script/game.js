@@ -124,9 +124,11 @@ cc.Class({
                 self.enemyInfo.getChildByName("bullet_record").width = 251;
                 if (info.name) self.enemyName.string = info.name;
 
+                //TODO: fix this const number
                 self.hero.getComponent('fly').bulletL = self.hero.getComponent('fly').bulletC;
                 self.hero.getComponent('fly').bulletShow.width = 251;
                 self.hero.getComponent('fly').health = 300;
+                self.hero.getComponent('fly').oil = 240;
                 self.hero.getComponent('fly').healthShow.width = 300;
 
                 return;
@@ -148,6 +150,7 @@ cc.Class({
 
             self.enemyFlight.setPosition(info.heroX, info.heroY);
             self.enemyFlight.setRotation(info.heroRotation);
+            self.enemyInfo.getChildByName("oil_record").width = info.oil;
 
             // console.log(info);
             // console.log(self.hero.getPosition());
@@ -200,6 +203,7 @@ cc.Class({
         var info = {
             heroX : this.hero.x,
             heroY : this.hero.y,
+            oil : this.hero.getComponent("fly").oil,
             heroRotation: this.hero.getRotation(),
         }
         this._wsiSendText.send(JSON.stringify(info));
