@@ -74,6 +74,9 @@ cc.Class({
 
         this.enemyInfo.active = false;
         this.forbiddenShow.active = false;
+
+        var manager = cc.director.getCollisionManager();
+        manager.enabled = true;
     },
 
     start() {

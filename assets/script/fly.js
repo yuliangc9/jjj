@@ -183,6 +183,11 @@ cc.Class({
             }, this, b)));
     },
 
+    onCollisionEnter () {
+        console.log('on collision enter');
+        this.lose();
+    },
+
     updateOil () {
         if (this.oil <= 0 || !this.game.isMatch) {
             return;
