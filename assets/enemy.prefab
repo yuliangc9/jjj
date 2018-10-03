@@ -27,10 +27,13 @@
       },
       {
         "__id__": 4
+      },
+      {
+        "__id__": 5
       }
     ],
     "_prefab": {
-      "__id__": 5
+      "__id__": 6
     },
     "_opacity": 255,
     "_color": {
@@ -73,7 +76,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 20,
+    "_localZOrder": 32,
     "groupIndex": 0,
     "_id": ""
   },
@@ -103,7 +106,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "04lEmrVTpIapgdxJY85evn"
+    "_id": "eeLH7fjvVLx7YVl3iR93FH"
   },
   {
     "__type__": "43577rsZ/BMVYhLQUrVAy+i",
@@ -120,9 +123,12 @@
       "__uuid__": "5f21ad89-3c7a-423c-a753-3a3b8f569b00"
     },
     "healthShow": null,
+    "oilShow": null,
     "bulletShow": null,
     "nameShow": null,
     "speed": 300,
+    "acSpeed": 0,
+    "normalSpeed": 0,
     "turnSpeed": 360,
     "targetRotation": 180,
     "initRotation": 0,
@@ -133,9 +139,10 @@
     "bulletSpeed": 1000,
     "role": "enemy",
     "health": 0,
+    "oil": 0,
     "loadFinish": true,
     "_finish": false,
-    "_id": "2b+5ollfVPk7bP7pvpxAUj"
+    "_id": "0buBC9N+pC0YztZmkfP062"
   },
   {
     "__type__": "cc.Animation",
@@ -157,7 +164,24 @@
       }
     ],
     "playOnLoad": false,
-    "_id": "bfAZOPzGlPgK+CgALmP1/H"
+    "_id": "b4siKSPwFO352h774T7vFV"
+  },
+  {
+    "__type__": "cc.CircleCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_radius": 42,
+    "_id": "day3iU0O9GPa5bvx/sDbJ+"
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -32,6 +32,11 @@ cc.Class({
             type: cc.Prefab,
         },
 
+        collisionAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
+
         shotAudio: {
             default: null,
             type: cc.AudioClip
@@ -184,8 +189,37 @@ cc.Class({
     },
 
     onCollisionEnter () {
-        console.log('on collision enter');
-        this.lose();
+        console.log('on fly collision');
+        if (this.role == "enemy" || this.isCollision == true) {
+            return;
+        }
+
+        cc.audioEngine.play(this.collisionAudio, false, 1);
+
+        this.isCollision = true;
+
+        var xd = (this.node.x - this.game.enemyFlight.x) * 4;
+        var yd = (this.node.y - this.game.enemyFlight.y) * 4;
+
+        if (this.node.x + xd > this.game.node.width/2) {
+            xd = this.game.node.width/2 - this.node.x;
+        }
+        if (this.node.x + xd < -this.game.node.width/2) {
+            xd = -this.game.node.width/2 - this.node.x;
+        }
+        if (this.node.y + yd > this.game.node.height/2) {
+            yd = this.game.node.height/2 - this.node.y;
+        }
+        if (this.node.y + yd < -this.game.node.height/2) {
+            yd = -this.game.node.height/2 - this.node.y;
+        }
+
+        this.getShot(10);
+
+        this.node.runAction(cc.sequence(cc.spawn(cc.moveBy(1, xd, yd).easing(cc.easeCubicActionOut()), cc.rotateBy(1, 180)), 
+        cc.callFunc(function() {
+            this.isCollision = false;
+        }, this)));
     },
 
     updateOil () {
@@ -200,7 +234,7 @@ cc.Class({
 
         var nowTime = new Date().getTime();
 
-        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.000025;
+        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.000009;
         this.oilShow.width = this.oil;
         this.lastUpdateOilTime = nowTime;
 
@@ -210,7 +244,7 @@ cc.Class({
     },
 
     update (dt) {
-        if (this.role == "enemy" || this._finish) {
+        if (this.role == "enemy" || this._finish || this.isCollision) {
             return;
         }
 

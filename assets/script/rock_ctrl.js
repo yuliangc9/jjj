@@ -27,6 +27,11 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        moveBase: {
+            default: null,
+            type: cc.Node,
+        },
+
         _isMoving: false,
     },
 
@@ -38,21 +43,27 @@ cc.Class({
     },
 
     moving: function(event) {
-        this.initX = 100 + (this.node.width/2) - (this.game.node.width/2);
-        this.initY = 100 + (this.node.height/2) - (this.game.node.height/2);
+        // this.initX = 100 + (this.node.width/2) - (this.game.node.width/2);
+        // this.initY = 100 + (this.node.height/2) - (this.game.node.height/2);
+        this.initX = this.moveBase.x;
+        this.initY = this.moveBase.y;
 
         if (!this._isMoving) {
             return;
         }
 
-        var tmpX = this.node.x + event.getDelta().x;
-        var tmpY = this.node.y + event.getDelta().y;
+        var tmpX = event.getLocationInView().x - this.game.node.width/2;
+        var tmpY = this.game.node.height/2 - event.getLocationInView().y;
 
-        // var tmpDistance = Math.sqrt((tmpX - this.initX)*(tmpX - this.initX) + (tmpY - this.initY)*(tmpY - this.initY));
-        // if (tmpDistance > 50) {
-        //     tmpX = 50/tmpDistance * (tmpX - this.initX) + this.initX;
-        //     tmpY = 50/tmpDistance * (tmpY - this.initY) + this.initY;
-        // }
+        var tmpDistance = Math.sqrt((tmpX - this.initX)*(tmpX - this.initX) + (tmpY - this.initY)*(tmpY - this.initY));
+        if (tmpDistance > this.moveBase.width/2) {
+            tmpX = this.moveBase.width/2/tmpDistance * (tmpX - this.initX) + this.initX;
+            tmpY = this.moveBase.width/2/tmpDistance * (tmpY - this.initY) + this.initY;
+        } else {
+            this.node.x = tmpX;
+            this.node.y = tmpY;
+            return;
+        }
 
         this.node.x = tmpX;
         this.node.y = tmpY;
@@ -83,8 +94,8 @@ cc.Class({
     endMove: function(event) {
         console.log("on rock end");
         this.node.opacity = 180;
-        this.initX = 100 + (this.node.width/2) - (this.game.node.width/2);
-        this.initY = 100 + (this.node.height/2) - (this.game.node.height/2);
+        this.initX = this.moveBase.x;
+        this.initY = this.moveBase.y;
 
         this._isMoving = false;
 
