@@ -20,6 +20,10 @@ cc.Class({
             default: null,
             type: cc.Node,
         },
+        oilWarnShow: {
+            default: null,
+            type: cc.Node,
+        },
         bgAudio: {
             default: null,
             type: cc.AudioClip
@@ -74,6 +78,7 @@ cc.Class({
 
         this.enemyInfo.active = false;
         this.forbiddenShow.active = false;
+        this.oilWarnShow.active = false;
 
         var manager = cc.director.getCollisionManager();
         manager.enabled = true;
@@ -214,7 +219,7 @@ cc.Class({
         if (this.enemyFlight != null) {
             if ((this.enemyFlight.x - this.hero.x)*(this.enemyFlight.x - this.hero.x) + 
                 (this.enemyFlight.y - this.hero.y)*(this.enemyFlight.y - this.hero.y) < 70*70) {
-                    this.forbiddenShow.active = true;
+                    this.forbiddenShow.active = false;
             } else {
                 this.forbiddenShow.active = false;
             }

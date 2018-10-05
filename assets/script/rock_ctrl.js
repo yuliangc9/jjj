@@ -59,7 +59,7 @@ cc.Class({
         if (tmpDistance > this.moveBase.width/2) {
             tmpX = this.moveBase.width/2/tmpDistance * (tmpX - this.initX) + this.initX;
             tmpY = this.moveBase.width/2/tmpDistance * (tmpY - this.initY) + this.initY;
-        } else {
+        } else if (tmpDistance < this.moveBase.width/10) {
             this.node.x = tmpX;
             this.node.y = tmpY;
             return;

@@ -198,8 +198,8 @@ cc.Class({
 
         this.isCollision = true;
 
-        var xd = (this.node.x - this.game.enemyFlight.x) * 4;
-        var yd = (this.node.y - this.game.enemyFlight.y) * 4;
+        var xd = (this.node.x - this.game.enemyFlight.x) * 2;
+        var yd = (this.node.y - this.game.enemyFlight.y) * 2;
 
         if (this.node.x + xd > this.game.node.width/2) {
             xd = this.game.node.width/2 - this.node.x;
@@ -237,6 +237,12 @@ cc.Class({
         this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.000009;
         this.oilShow.width = this.oil;
         this.lastUpdateOilTime = nowTime;
+
+        if (this.oil < 40) {
+            this.game.oilWarnShow.active = true;
+        } else {
+            this.game.oilWarnShow.active = false;
+        }
 
         if (this.oil <= 0) {
             this.lose();
