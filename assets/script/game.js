@@ -12,6 +12,14 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        playAgainInfo: {
+            default: null,
+            type: cc.Label,
+        },
+        planePic: {
+            default:[],
+            type:[cc.SpriteFrame],
+        },
         hero: {
             default: null,
             type: cc.Node,
@@ -21,6 +29,10 @@ cc.Class({
             type: cc.Node,
         },
         oilWarnShow: {
+            default: null,
+            type: cc.Node,
+        },
+        matchingShow: {
             default: null,
             type: cc.Node,
         },
@@ -79,6 +91,7 @@ cc.Class({
         this.enemyInfo.active = false;
         this.forbiddenShow.active = false;
         this.oilWarnShow.active = false;
+        this.matchingShow.active = true;
 
         var manager = cc.director.getCollisionManager();
         manager.enabled = true;
@@ -99,7 +112,7 @@ cc.Class({
         this.wsReady = false;
         this.isMatch = false;
         
-        this._wsiSendText = new WebSocket("ws://47.105.151.1:8080/fight");
+        this._wsiSendText = new WebSocket("ws://"+GlobalConfig.serverArena+"/fight");
         this._wsiSendText.onopen = function(evt) {
             console.log("on open");
             self.wsReady = true;
@@ -126,6 +139,7 @@ cc.Class({
             if (info.begin) {
                 console.log(evt.data);
                 console.log("match!", self.enemyInfo.getChildByName("enemy_name"));
+                self.matchingShow.active = false;
                 self.isMatch = true;
                 self.enemyInfo.active = true;
                 self.enemyInfo.getChildByName("enemy_life_record").width = info.initHealth;
@@ -184,9 +198,16 @@ cc.Class({
             this.enemyFlight = null;
         }
 
-        this.connectServer();
+        //this.connectServer();
 
-        this.enemyInfo.active = false;
+        //this.enemyInfo.active = false;
+
+        this.playAgainInfo.string = "获得胜利！"; 
+        this.playAgain.node.active = true;
+
+        if (this.bgMusicID != null) {
+            cc.audioEngine.stop(this.bgMusicID);
+        }
     },
 
     lose: function() {
@@ -196,6 +217,7 @@ cc.Class({
         }
 
         // this.hero.destroy();
+        this.playAgainInfo.string = "输噜！"; 
         this.playAgain.node.active = true;
 
         if (this.bgMusicID != null) {
@@ -216,14 +238,14 @@ cc.Class({
         }
         this._wsiSendText.send(JSON.stringify(info));
 
-        if (this.enemyFlight != null) {
-            if ((this.enemyFlight.x - this.hero.x)*(this.enemyFlight.x - this.hero.x) + 
-                (this.enemyFlight.y - this.hero.y)*(this.enemyFlight.y - this.hero.y) < 70*70) {
-                    this.forbiddenShow.active = false;
-            } else {
-                this.forbiddenShow.active = false;
-            }
-        }
+        // if (this.enemyFlight != null) {
+        //     if ((this.enemyFlight.x - this.hero.x)*(this.enemyFlight.x - this.hero.x) + 
+        //         (this.enemyFlight.y - this.hero.y)*(this.enemyFlight.y - this.hero.y) < 70*70) {
+        //             this.forbiddenShow.active = false;
+        //     } else {
+        //         this.forbiddenShow.active = false;
+        //     }
+        // }
     },
 
     notifyFire: function() {

@@ -103,11 +103,14 @@ cc.Class({
     },
 
     start () {
+        //this.node.getComponent(cc.Sprite).SpriteFrame = this.game.planePic[0];
+        //this.node.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame("https://livecloud-dev.oss-cn-beijing.aliyuncs.com/plane.png" )
     },
 
     getShot: function(power) {
         console.log("get shoted!", power, this.health);
         this.health -= power;
+        if (this.health < 0) this.health = 0;
 
         var shotedAnim = this.node.getComponent(cc.Animation);
         shotedAnim.play("shoted");
@@ -341,7 +344,7 @@ cc.Class({
 
         var deltaR = targetRotation - this.node.getRotation();
 
-        if (deltaR < 20 && deltaR > -20) {
+        if (deltaR < 45 && deltaR > -45) {
             return deltaR;
         }
 
