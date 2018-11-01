@@ -79,6 +79,7 @@ cc.Class({
 
         health: 0,
         oil: 0,
+        maxOil: 0,
 
         loadFinish: true,
         _finish: false,
@@ -191,8 +192,54 @@ cc.Class({
             }, this, b)));
     },
 
-    onCollisionEnter () {
+    onCollisionEnter (other, self) {
         console.log('on fly collision');
+
+        if (this._finish) {
+            return;
+        }
+
+        if (other.node.name == "oil_station") {
+            this.oil = this.maxOil;
+            return;
+        }
+
+        if (other.node.name == "bullet" && this.role == "enemy") {
+            this.health -= 100;
+            if (this.health < 0) this.health = 0;
+    
+            var shotedAnim = this.node.getComponent(cc.Animation);
+            shotedAnim.play("shoted");
+    
+            if (this.health <= 0) {
+                this.lose();
+                this.game.addScore();
+                return;
+            }
+
+            return;
+        }
+
+        if (other.node.name == "enemy" && this.role == "hero" && other.node.getComponent("fly").health > 0) {
+            this.lose();
+            this.game.lose();
+            return;
+        }
+
+        if (other.node.name == "flight" && this.role == "enemy") {
+            this.lose();
+            this.game.addScore();
+            return;
+        }
+
+        if (other.node.name == "protectArea" && this.role == "enemy") {
+            this.lose();
+            this.game.lose();
+            return;
+        }
+
+        return;
+
         if (this.role == "enemy" || this.isCollision == true) {
             return;
         }
@@ -226,7 +273,7 @@ cc.Class({
     },
 
     updateOil () {
-        if (this.oil <= 0 || !this.game.isMatch) {
+        if (this.oil <= 0) {
             return;
         }
 
@@ -237,7 +284,7 @@ cc.Class({
 
         var nowTime = new Date().getTime();
 
-        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.000009;
+        this.oil -= (nowTime - this.lastUpdateOilTime) * this.speed * 0.00002;
         this.oilShow.width = this.oil;
         this.lastUpdateOilTime = nowTime;
 
@@ -253,7 +300,7 @@ cc.Class({
     },
 
     update (dt) {
-        if (this.role == "enemy" || this._finish || this.isCollision) {
+        if (this.role == "enemy" || this._finish) {
             return;
         }
 
@@ -354,10 +401,18 @@ cc.Class({
     lose: function() {
         this._finish = true;
 
-        var shotedAnim = this.node.getComponent(cc.Animation);
-        shotedAnim.play("fail_boom");
+        this.node.stopAllActions()
 
-        this.game.lose();
+        var shotedAnim = this.node.getComponent(cc.Animation);
+
+        if (this.role == "enemy") {
+            shotedAnim.play("fail_boom", 0.2);
+        }
+        if (this.role == "hero") {
+            shotedAnim.play("fail_boom");
+        }
+
+        //this.game.lose();
     },
 
     disappear: function() {

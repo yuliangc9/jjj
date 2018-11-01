@@ -76,7 +76,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 32,
+    "_localZOrder": 63,
     "groupIndex": 0,
     "_id": ""
   },
@@ -106,7 +106,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "eeLH7fjvVLx7YVl3iR93FH"
+    "_id": "ba+EZ3/ylLirXBuVuI74PI"
   },
   {
     "__type__": "43577rsZ/BMVYhLQUrVAy+i",
@@ -119,6 +119,7 @@
     "bulletPrefab": {
       "__uuid__": "14e217f9-3c74-4ebe-96b5-f7ad8168e3a2"
     },
+    "collisionAudio": null,
     "shotAudio": {
       "__uuid__": "5f21ad89-3c7a-423c-a753-3a3b8f569b00"
     },
@@ -138,11 +139,12 @@
     "bulletL": 40,
     "bulletSpeed": 1000,
     "role": "enemy",
-    "health": 0,
+    "health": 300,
     "oil": 0,
+    "maxOil": 0,
     "loadFinish": true,
     "_finish": false,
-    "_id": "0buBC9N+pC0YztZmkfP062"
+    "_id": "edoKCSFpdHgZp3KtxntUE2"
   },
   {
     "__type__": "cc.Animation",
@@ -164,7 +166,7 @@
       }
     ],
     "playOnLoad": false,
-    "_id": "b4siKSPwFO352h774T7vFV"
+    "_id": "31wNVlxR5GeZ0m2soQV+CF"
   },
   {
     "__type__": "cc.CircleCollider",
@@ -181,7 +183,7 @@
       "y": 0
     },
     "_radius": 42,
-    "_id": "day3iU0O9GPa5bvx/sDbJ+"
+    "_id": "benGnjbMhAS496fNxsY6dS"
   },
   {
     "__type__": "cc.PrefabInfo",

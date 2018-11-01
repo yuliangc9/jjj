@@ -88,7 +88,9 @@ cc.Class({
             if (deltaY > 0) targetRotation += 270;
         }
 
-        this.game.hero.getComponent('fly').targetRotation = targetRotation;
+        if (!this.game._losed) {
+            this.game.hero.getComponent('fly').targetRotation = targetRotation;
+        }
     },
 
     endMove: function(event) {

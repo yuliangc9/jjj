@@ -52,6 +52,10 @@ cc.Class({
             default: null,
             type: cc.Label,
         },
+        scoreRecord: {
+            default: null,
+            type: cc.Label,
+        },
         rock: {
             default: null,
             type: cc.Node,
@@ -69,6 +73,7 @@ cc.Class({
             type: cc.Prefab,
         },
         playAgain: cc.Button,
+        score: 0,
     },
 
     wsReady: false,
@@ -78,6 +83,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        this._losed = false;
         this.rock.getComponent('rock_ctrl').game = this;
         this.hero.getComponent('fly').game = this;
         this.fireButton.getComponent('fire_ctrl').game = this;
@@ -88,17 +94,18 @@ cc.Class({
             cc.director.loadScene('fight');
         }, this);
 
-        this.enemyInfo.active = false;
+        //this.enemyInfo.active = false;
         this.forbiddenShow.active = false;
         this.oilWarnShow.active = false;
-        this.matchingShow.active = true;
+        this.matchingShow.active = false;
 
         var manager = cc.director.getCollisionManager();
         manager.enabled = true;
     },
 
     start() {
-        this.connectServer();
+        //this.connectServer();
+        this.placeEnemy();
         this.bgMusicID = cc.audioEngine.play(this.bgAudio, true, 0.8);
     },
 
@@ -210,12 +217,33 @@ cc.Class({
         }
     },
 
+    placeEnemy: function() {
+        console.log("init enemy flight");
+        var enemyFlight = cc.instantiate(this.enemy);
+        enemyFlight.getComponent('fly').game = this;
+        this.node.addChild(enemyFlight);
+
+        var positionRand = this.node.height*Math.random() - this.node.height/2;
+        enemyFlight.setPosition(this.node.width/2, positionRand);
+        enemyFlight.setRotation(180);
+
+        var randSpeed = 3 + Math.random()*5;
+        enemyFlight.runAction(cc.sequence(cc.moveBy(randSpeed, -this.node.width, 0), 
+        cc.callFunc(function(bullet) {
+            enemyFlight.destroy();
+        }, this, enemyFlight)));
+
+        var timeRand = Math.random() * 3000 + 900;
+        setTimeout(this.placeEnemy.bind(this), timeRand);
+    },
+
     lose: function() {
         console.log("on lose");
         if (this.wsReady) {
             this._wsiSendText.close();
         }
 
+        this._losed = true;
         // this.hero.destroy();
         this.playAgainInfo.string = "输噜！"; 
         this.playAgain.node.active = true;
@@ -265,5 +293,11 @@ cc.Class({
         }
 
         this._wsiSendText.send(JSON.stringify({health:h}));
+    },
+
+    addScore: function() {
+        console.log("add record");
+        this.score ++;
+        this.scoreRecord.string = ""+this.score;
     },
 });

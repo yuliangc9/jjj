@@ -50,7 +50,25 @@ cc.Class({
         this.node.destroy();
     },
 
+    onCollisionEnter (other, self) {
+        if (this.finish) {
+            console.log("bullet bingo finish");
+            this.node.stopAllActions();
+            return;
+        }
+
+        if (other.node.name == "flight") {
+            return;
+        }
+
+        this.finish = true;
+
+        var shotedAnim = this.node.getComponent(cc.Animation);
+        shotedAnim.play("bullet_boom");
+    },
+
     update (dt) {
+        return;
         if (this.finish) {
             console.log("bullet bingo finish");
             this.node.stopAllActions();

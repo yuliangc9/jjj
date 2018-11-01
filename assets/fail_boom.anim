@@ -3,7 +3,7 @@
   "_name": "fail_boom",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1,
+  "_duration": 0.6666666666666666,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -37,7 +37,7 @@
           "value": 0.1
         },
         {
-          "frame": 1,
+          "frame": 0.6666666666666666,
           "value": 2
         }
       ],
@@ -51,7 +51,7 @@
           "value": 0.1
         },
         {
-          "frame": 1,
+          "frame": 0.6666666666666666,
           "value": 2
         }
       ]
@@ -59,7 +59,7 @@
   },
   "events": [
     {
-      "frame": 1,
+      "frame": 0.6666666666666666,
       "func": "disappear",
       "params": []
     }
